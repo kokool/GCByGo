@@ -19,7 +19,7 @@ func Init_data() {
 	heap[5] = Object{children: []int{55}, node_type: data_type, marked: false, size: 2, next_freeIndex: -100}
 	//对象指向的对象（非活动对象）
 	heap[0] = Object{children: []int{20}, node_type: data_type, marked: false, size: 2, next_freeIndex: -100}
-	heap[2] = Object{children: []int{22}, node_type: data_type, marked: false, size: 2, next_freeIndex: -100}
+	heap[2] = Object{children: []int{1}, node_type: key_type, marked: false, size: 2, next_freeIndex: -100}
 	heap[6] = Object{children: []int{66}, node_type: data_type, marked: false, size: 2, next_freeIndex: -100}
 	//roots指向的对象
 	roots = []int{1, 3}
