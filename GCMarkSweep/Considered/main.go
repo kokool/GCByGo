@@ -17,5 +17,5 @@ func main() {
 	MSC.Sweep_phase()
 	fmt.Println("### sweep phase ###")
 	MSC.Print_data()
-	_ = MSC.NewObject("Data", []int{22}, 6)
+	_ = MSC.NewObject("Data", []int{22}, 4)
 }

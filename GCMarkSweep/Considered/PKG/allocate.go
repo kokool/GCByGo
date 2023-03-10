@@ -42,7 +42,7 @@ func pickup_chunk(node_type string, children []int, needSize int, freeList []int
 		//刚刚好就直接返回这个对象
 		if heap[index].size == needSize {
 			return &heap[index]
-			//如果空间较大就要分块。
+			//如果空间较大就要分块
 		} else if heap[index].size > needSize {
 			heap[index].size -= needSize
 			obj := *newObject(node_type, children, needSize)

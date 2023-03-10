@@ -20,7 +20,7 @@ func mark(obj *Object) {
 }
 
 func Sweep_phase() {
-	//默认-1表示一开始没有分块
+	//默认-1表示一开始没有分块。
 	chunk_index = -1
 
 	for id := range heap {

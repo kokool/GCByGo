@@ -29,7 +29,7 @@ func Init_data(BASE_NUM, BASE_SPACE int) {
 		heap = append(heap, *NewObject("Data", nil, BASE_SPACE-init_space))
 	}
 
-	//roots指向的对象
+	//roots指向的对象.
 	// roots = []int{1, 3}
 	roots = append(roots, 0)
 	roots = append(roots, 3)

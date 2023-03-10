@@ -11,7 +11,7 @@ func coalescing() {
 	intervals := changeSize()
 	//第二步：合并区间操作
 	m := merge(intervals)
-	//第三步：利用切片和循环来合并成新的堆，更新成合并的新对象，与free_list的next_freeIndex
+	//第三步：利用切片和循环来合并成新的堆，更新成合并的新对象与free_list的next_freeIndex
 	newHeap(m)
 }
 

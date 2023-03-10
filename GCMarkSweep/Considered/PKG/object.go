@@ -22,7 +22,7 @@ func newNodeType(node_type string) NodeType {
 /*根*/
 var roots []int
 
-/*链表*/
+/*链表。*/
 
 var chunk_index int
 
