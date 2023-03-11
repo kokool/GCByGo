@@ -1,5 +1,7 @@
 package PKG
 
+import "fmt"
+
 /*分配操作*/
 func NewObject(node_type string, children []int, size int) *Object {
 	//free_list不为空时就表示已经初始化了数据，空间分配就那么多，就只能用这些还可以用的空间
@@ -58,6 +60,7 @@ func pickup_chunk(node_type string, children []int, needSize int, freeList []int
 			return &heap[index]
 		}
 	}
+	fmt.Println(heap)
 
 	return nil
 }

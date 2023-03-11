@@ -6,6 +6,8 @@ func mutator() {
 
 }
 
+//BASE_SPACE初步规定好的堆的空间
+//初步规定好的对象数量
 func Init_data(BASE_NUM, BASE_SPACE int) {
 	for i := 0; i < BASE_NUM; i++ {
 		no := NewObject("Null", nil, 0)
@@ -25,7 +27,7 @@ func Init_data(BASE_NUM, BASE_SPACE int) {
 	//判断堆的初始化的空间够不够？
 	if BASE_SPACE < init_space {
 		panic("堆不够空间分配对象")
-	} else if BASE_SPACE > init_space {
+	} else if BASE_SPACE > init_space { //最终剩下的空间用来新增一个对象
 		heap = append(heap, *NewObject("Data", nil, BASE_SPACE-init_space))
 	}
 

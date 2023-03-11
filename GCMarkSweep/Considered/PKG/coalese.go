@@ -7,7 +7,7 @@ import (
 
 /*合并操作*/
 func coalescing() {
-	//第一步：修改各对象的size
+	//第一步：修改各对象的size，获取每次修改涉及到的两个对象的index，将它们变成区间
 	intervals := changeSize()
 	//第二步：合并区间操作
 	m := merge(intervals)
