@@ -1,7 +1,8 @@
 package PKG
 
 type Object struct {
-	size    int
+	size int
+	//计数器
 	refCnt  int
 	payload []byte
 }
