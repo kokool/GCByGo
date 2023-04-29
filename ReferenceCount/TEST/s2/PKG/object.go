@@ -6,4 +6,4 @@ type Object struct {
 	payload []byte
 }
 
-var freeList []*Object
+var free_list []*Object

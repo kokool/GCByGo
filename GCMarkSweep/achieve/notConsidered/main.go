@@ -1,7 +1,7 @@
 package main
 
 import (
-	MS "GCByGo/GCMarkSweep/notConsidered/PKG"
+	MS "GCByGo/GCMarkSweep/achieve/notConsidered/PKG"
 	"fmt"
 )
 

@@ -1,7 +1,5 @@
 package PKG
 
-import "fmt"
-
 /*分配操作*/
 // newObj creates a new Object with given size
 func newObj(size int) *Object {
@@ -12,11 +10,12 @@ func newObj(size int) *Object {
 			allocation_fail()
 		}
 		obj.refCnt = 1
+		return obj
 		//空闲链表表示空的话，没必要继续
 	} else {
 		allocation_fail()
 	}
-	return obj
+	return nil
 }
 
 func allocation_fail() {

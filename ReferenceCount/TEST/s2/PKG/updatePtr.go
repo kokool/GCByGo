@@ -21,6 +21,6 @@ func incRefCnt(obj *Object) {
 func decRefCnt(obj *Object) {
 	obj.refCnt--
 	if obj.refCnt == 0 {
-		freeList = append(freeList, obj)
+		free_list = append(free_list, obj)
 	}
 }

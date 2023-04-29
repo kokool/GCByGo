@@ -1,7 +1,7 @@
 package main
 
 import (
-	MSC "GCByGo/GCMarkSweep/Considered/PKG"
+	MSC "GCByGo/GCMarkSweep/achieve/Considered/PKG"
 	"fmt"
 )
 
