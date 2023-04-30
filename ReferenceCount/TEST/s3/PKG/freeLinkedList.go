@@ -13,12 +13,12 @@ type Node struct {
 }
 
 // 2.定义链表结构体：链表应该包含一个头节点，以及一些基本的操作方法，如插入、删除和搜索。
-type LinkedList struct {
+type FreeLinkedList struct {
 	Head *Node
 }
 
 //在链表头部插入节点
-func (list *LinkedList) InsertAtBeginning(data interface{}) {
+func (list *FreeLinkedList) InsertAtBeginning(data interface{}) {
 	newNode := &Node{Data: data}
 	if list.Head == nil {
 		list.Head = newNode
@@ -29,7 +29,7 @@ func (list *LinkedList) InsertAtBeginning(data interface{}) {
 }
 
 //在链表尾部插入节点
-func (list *LinkedList) InsertAtEnd(data interface{}) {
+func (list *FreeLinkedList) InsertAtEnd(data interface{}) {
 	newNode := &Node{Data: data}
 	if list.Head == nil {
 		list.Head = newNode
@@ -43,7 +43,7 @@ func (list *LinkedList) InsertAtEnd(data interface{}) {
 }
 
 //删除链表中的某个节点
-func (list *LinkedList) DeleteNode(data interface{}) {
+func (list *FreeLinkedList) DeleteNode(data interface{}) {
 	if list.Head == nil {
 		return
 	}
@@ -64,7 +64,7 @@ func (list *LinkedList) DeleteNode(data interface{}) {
 }
 
 //在链表中查找节点
-func (list *LinkedList) FindNode(target interface{}) *Node {
+func (list *FreeLinkedList) FindNode(target interface{}) *Node {
 	current := list.Head
 	for current != nil {
 		if current.Data == target {
@@ -80,8 +80,8 @@ func (n *Node) String() string {
 	return fmt.Sprintf("%v", n.Data)
 }
 
-//链表信息
-func (list *LinkedList) PrintLinkedList() {
+//输出链表信息
+func (list *FreeLinkedList) PrintLinkedList() {
 	current := list.Head
 	for current != nil {
 		fmt.Printf("%v->", current.Data)

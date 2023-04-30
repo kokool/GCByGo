@@ -1,0 +1,12 @@
+//对根存放对象编号的测试成功
+package main
+
+import "fmt"
+
+func main() {
+	roots := make([]byte, 3)
+	roots[0] = 'A'
+	roots[1] = 'B'
+	fmt.Println(string(roots)) //AB
+	fmt.Println(roots)         //[65 66 0]
+}

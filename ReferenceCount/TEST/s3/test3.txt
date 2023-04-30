@@ -1,0 +1,35 @@
+//测试成功：引用关系应该是用切片表示，而不是map，不然不能正确表示多个引用关系。
+package main
+
+import "fmt"
+
+type Object struct {
+	No       string
+	children []*Object
+}
+
+func (obj *Object) AddRef(ptr *Object) {
+	obj.children = append(obj.children, ptr)
+}
+
+//修改输出格式
+func (obj *Object) String() string {
+	childStr := ""
+	for _, child := range obj.children {
+		childStr += child.No + " "
+	}
+	return fmt.Sprintf("{%s [%s]}", obj.No, childStr)
+}
+
+func main() {
+	root := &Object{No: "root"}
+	a := &Object{No: "A"}
+	b := &Object{No: "B"}
+	c := &Object{No: "C"}
+	root.AddRef(a)
+	root.AddRef(c)
+	a.AddRef(b)
+	fmt.Printf("%+v\n", root) //&{No:root children:[0xc000096030 0xc000096090]}
+	fmt.Printf("%p\n", a)     //0xc000096030
+	fmt.Printf("%+v\n", a)    //&{No:A children:[0xc000096060]}
+}

@@ -1,13 +1,19 @@
+//这个文件的空闲链表测试OK，专门存放垃圾对象
 package main
 
 import (
 	"fmt"
 
-	L "GCByGo/ReferenceCount/TEST/s2/PKG"
+	L "GCByGo/ReferenceCount/TEST/s3/PKG"
 )
 
+type No struct {
+	count int
+	data  []byte
+}
+
 func main() {
-	node1 := &L.Node{Data: 10}
+	node1 := &L.Node{Data: No{count: 10, data: make([]byte, 2)}}
 	node2 := &L.Node{Data: 20}
 	node3 := &L.Node{Data: 30}
 	node4 := &L.Node{Data: 40}
@@ -17,10 +23,10 @@ func main() {
 	list.InsertAtEnd(node3)
 	list.InsertAtEnd(node4)
 
-	list.PrintLinkedList() //20->10->30->40->nil
+	list.PrintLinkedList() //20->{10 [0 0]}->30->40->nil
 	list.DeleteNode(node2)
 	fmt.Println(list.FindNode(node3))  //in func String： Data:30
 	fmt.Println(*list.FindNode(node3)) //in func String：{Data Next}
 	fmt.Println(list.FindNode(node2))  //nil
-	list.PrintLinkedList()             //10->30->40->nil
+	list.PrintLinkedList()             //{10 [0 0]}->30->40->nil
 }
