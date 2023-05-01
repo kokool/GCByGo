@@ -16,9 +16,6 @@ func Example1(Num, Size int, list *FreeLinkedList) {
 	}
 	//root->A
 	root.AddRef(heap[0])
-	fmt.Println(heap[0])
-	fmt.Println(heap[1])
-	fmt.Println(heap[2])
 	//root->C
 	root.AddRef(heap[2])
 	//A->B
@@ -53,5 +50,6 @@ func InitData(BASE_SPACE int) *FreeLinkedList {
 func Execute(BASE_SPACE int) {
 	list := InitData(BASE_SPACE)
 	Example1(Num, Size, list)
+	list.printLinkedList()
 	mergeChunk(list)
 }
