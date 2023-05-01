@@ -67,6 +67,7 @@ func (obj *Object) destroy() {
 }
 
 func main() {
+	//问题3：Data的作用不应该是一个没使用的变量，而就是Children，专门存放引用的地址
 	root := &Object{No: "root", RefCnt: 1, Data: make([]byte, 2)}
 	a := &Object{No: "A", RefCnt: 0, Data: make([]byte, 2)}
 	b := &Object{No: "B", RefCnt: 0, Data: make([]byte, 2)}
