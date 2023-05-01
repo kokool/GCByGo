@@ -1,0 +1,11 @@
+//空间的分配测试成功，再弄个分块合并，就可以对它们进行一个整合了。
+package main
+
+import (
+	L "GCByGo/ReferenceCount/TEST/s3/PKG"
+)
+
+func main() {
+	L.InitData(10)
+
+}

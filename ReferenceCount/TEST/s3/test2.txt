@@ -1,4 +1,4 @@
-//对根存放对象编号的测试成功
+//对byte类型的测试
 package main
 
 import "fmt"

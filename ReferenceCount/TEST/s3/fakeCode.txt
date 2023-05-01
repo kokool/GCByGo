@@ -1,0 +1,45 @@
+//这次解决new_obj()的问题
+package main
+
+type Object struct {
+	No       string
+	RefCnt   int
+	size     int
+	children []*Object
+}
+
+func NewObject(size int) *Object {
+
+}
+
+//伪代码
+func pickupChunk(size int) *Object {
+	//遍历空闲链表（注意这里的空闲链表是切片结构 free_list []*Object）
+	for i, obj := range free_list {
+		//我的思路：
+		//如果刚好存在分块的大小  等于 你需要的
+		if obj.size == size {
+			//将这个符合条件的分块拿出来，即要删除它
+			free_list = append(free_list[:i], free_list[i+1:]...)
+			return obj
+			//如果是大于
+		} else if obj.size > size {
+			obj.size = size
+			obj.refCnt = 0
+			obj.children = []*Object{}
+			remainingChunk := &Object{
+				size:     obj.size - size,
+				RefCnt:   0,
+				children: []*Object{},
+			}
+			free_list[i] = remainingChunk
+			return obj
+		} else {
+			panic("allocate error")
+		}
+	}
+	//因为实际我采取的是链表结构+引用计数法的特性，
+	//所以可以先把所有分块合并检查的再分配，从而避免下一次分块太过于碎片导致的错误分配。
+	//这里进行链表的分块合并操作，就不写太具体了。
+	return nil
+}

@@ -85,3 +85,7 @@ func (obj *Object) AddRef(ptr *Object) {
 // func (obj *Object) RemoveRef(ptr *Object) {
 // 	delete(obj.children, ptr)
 // }
+
+func (obj *Object) GetInterface() (string, int) {
+	return obj.No, len(obj.Data)
+}

@@ -17,19 +17,20 @@ type FreeLinkedList struct {
 	Head *Node
 }
 
-//在链表头部插入节点
-func (list *FreeLinkedList) InsertAtBeginning(data interface{}) {
-	newNode := &Node{Data: data}
-	if list.Head == nil {
-		list.Head = newNode
-	} else {
-		newNode.Next = list.Head
-		list.Head = newNode
-	}
-}
+//在链表头部插入节点（鸡肋的操作）
+// func (list *FreeLinkedList) InsertAtBeginning(data interface{}) {
+// 	newNode := &Node{Data: data}
+// 	if list.Head == nil {
+// 		list.Head = newNode
+// 	} else {
+// 		newNode.Next = list.Head
+// 		list.Head = newNode
+// 	}
+// }
 
-//在链表尾部插入节点
+//在链表尾部插入节点，注意格式要变成*PKG.Object,而不是*PKG.Node
 func (list *FreeLinkedList) InsertAtEnd(data interface{}) {
+	// fmt.Printf("i %T\n", data)
 	newNode := &Node{Data: data}
 	if list.Head == nil {
 		list.Head = newNode
@@ -44,6 +45,7 @@ func (list *FreeLinkedList) InsertAtEnd(data interface{}) {
 
 //删除链表中的某个节点
 func (list *FreeLinkedList) DeleteNode(data interface{}) {
+	// fmt.Println("head", list.Head.Data, data)
 	if list.Head == nil {
 		return
 	}
@@ -53,7 +55,11 @@ func (list *FreeLinkedList) DeleteNode(data interface{}) {
 	}
 	prev := list.Head
 	current := list.Head.Next
+	// fmt.Println("pointer", prev, current)
 	for current != nil {
+		// fmt.Println("now", current.Data, data)
+		// fmt.Printf("d %T\n", current.Data)
+		// fmt.Printf("d %T\n", data)
 		if current.Data == data {
 			prev.Next = current.Next
 			return

@@ -13,20 +13,25 @@ type No struct {
 }
 
 func main() {
+	//No{count: 10, data: make([]byte, 2)}
+	head := &L.Node{Data: "head"}
+	node0 := &L.Node{Data: 0}
 	node1 := &L.Node{Data: No{count: 10, data: make([]byte, 2)}}
 	node2 := &L.Node{Data: 20}
 	node3 := &L.Node{Data: 30}
 	node4 := &L.Node{Data: 40}
 
-	list := &L.FreeLinkedList{Head: node1}
-	list.InsertAtBeginning(node2)
+	//问题1：定义的头结点并不能被执行删除操作，所以在头节点前面可以插入节点反而显得鸡肋
+	list := &L.FreeLinkedList{Head: head}
+	list.InsertAtEnd(node0)
+	list.InsertAtEnd(node1)
 	list.InsertAtEnd(node3)
 	list.InsertAtEnd(node4)
 
 	list.PrintLinkedList() //20->{10 [0 0]}->30->40->nil
-	list.DeleteNode(node2)
-	fmt.Println(list.FindNode(node3))  //in func String： Data:30
-	fmt.Println(*list.FindNode(node3)) //in func String：{Data Next}
+	list.DeleteNode(node1)
+	fmt.Println(list.FindNode(head))   //in func String： Data:30
+	fmt.Println(*list.FindNode(node4)) //in func String：{Data Next}
 	fmt.Println(list.FindNode(node2))  //nil
 	list.PrintLinkedList()             //{10 [0 0]}->30->40->nil
 }

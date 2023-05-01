@@ -1,0 +1,32 @@
+//测试成功：从interface值中获取自己存放的属性
+/*
+在Go语言中， interface{}是一种统一类型，可以用来表示任何类型的值。
+但是，由于interface{} 没有定义任何方法或属性，因此无法直接在其上
+访问任何属性或方法。如果你希望在一个interface{}类型的变量上调用
+属性，先将其转化成方法的类型，然后又一个执行某个结构体的interface{}类型的变量，
+而该结构体具有GetInterface方法，使用断言转换获得其值。
+*/
+package main
+
+import (
+	L "GCByGo/ReferenceCount/TEST/s3/PKG"
+	"fmt"
+)
+
+func main() {
+	No0 := &L.Object{No: "No.0", RefCnt: 100, Data: make([]byte, 10)}
+	node0 := &L.Node{Data: No0}
+	list := &L.FreeLinkedList{Head: node0}
+	list.PrintLinkedList()
+	current := list.Head
+	for current != nil {
+		var object interface{}
+		temp := current.Data
+		object = temp
+		if ms, ok := object.(*L.Object); ok {
+			no, refcnt, size := ms.GetInterface()
+			fmt.Println(no, refcnt, size)
+		}
+		current = current.Next
+	}
+}
