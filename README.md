@@ -20,19 +20,14 @@ https://blog.csdn.net/kokool/article/details/129384458
 # ReferenceCount（引用计数法）
 ## ReferenceCount\achieve
 只考虑书本的方案去正确实现书本提供的例子，而不考虑优化等问题。
+### ReferenceCount\achieve\Considered
+把图3.2该例子的所有涉及到的结构体实现都考虑了一遍
 
 ## ReferenceCount\TEST
-对具体代码进行测试的内容，可能可以运行但是结果不对，也可能不能运行
+对具体代码进行测试的内容，目前已经测试完成
 ### ReferenceCount\TEST\s1（chatGpt提供的一个简易实现）
-**缺点**：
-- 并没有考虑指针引用修改的情况
-- 内存泄漏、过早释放等问题严重
-
 ### ReferenceCount\TEST\s2（chatGpt参考伪代码的初期版本）
-不能运行，里面都是问题很多
-
-### ReferenceCount\TEST\s3（真正可以运行，但是没写完）
-基于如下的chatGpt带来的宝贵经验，将自己的问题拆分成多块小问题，testX.go的内容都是基于这点实现。
+### ReferenceCount\TEST\s3（可运行，但是不用在意）
 
 # 总结
 写的不完美，也不实用（性能堪忧、多线程环境不能运行），但是字符输出的结果较直观，例子选用的是《垃圾回收的算法与实现》，不过例子少，难免出现错漏。
