@@ -1,4 +1,4 @@
-# GCMarkSweep
+# GCMarkSweep（标记-清除）
 标记清楚算法的内容，目录与接下来的计划如下，尽请期待。
 
 - 经过实验，chatGpt3.5 不太可以提供太复杂的示例，代码bug等问题，还是得靠自己，但是它至少提供了一个简易实现思路给我。
@@ -21,7 +21,7 @@ https://blog.csdn.net/kokool/article/details/129384458
 ## GCMarkSweep\optimization
 中村成洋的《垃圾回收的算法与实现》的所有有关于优化方案。
 
-# ReferenceCount
+# ReferenceCount（引用计数法）
 ## ReferenceCount\achieve
 只考虑书本的方案去正确实现书本提供的例子，而不考虑优化等问题。
 
