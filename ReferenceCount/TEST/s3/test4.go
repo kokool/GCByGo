@@ -1,5 +1,11 @@
-//测试失败原因分析：应该就是递归的条件判断问题
-//明明节点A还在被rott引用，但是却refCnt=0
+//测试失败原因分析：
+//理解错误书本中的update_ptr()
+//函数用于更新指针 ptr，使其指向对象 obj，同时进行计数器值的增减。
+//一开始其实没看懂下面这句话：
+//1. 对指针 ptr 新引用的对象（obj）的计数器进行增量操作
+//2. 对指针 ptr 之前引用的对象（*ptr）的计数器进行减量操作
+//因此写成 func (obj *Object) UpdatePtr(oldptr *Object, ptr *Object)
+//表示 obj->oldptr => obj->ptr
 package main
 
 import "fmt"
@@ -11,13 +17,17 @@ type Object struct {
 	children []*Object
 }
 
-func (obj *Object) UpdatePtr(ptr *Object) {
+func (obj *Object) UpdatePtr(oldptr *Object, ptr *Object) {
 	if ptr == nil {
 		return
 	}
+	if oldptr == ptr {
+		return
+	}
 	ptr.IncRefCnt()
-	obj.DecRefCnt()
+	DecRefCnt(&oldptr)
 	obj.children = []*Object{ptr}
+	// obj.IncRefCnt()
 }
 
 func (obj *Object) IncRefCnt() {
@@ -27,20 +37,34 @@ func (obj *Object) IncRefCnt() {
 	obj.RefCnt++
 }
 
-func (obj *Object) DecRefCnt() {
+// func (obj *Object) DecRefCnt() {
+// 	if obj == nil {
+// 		return
+// 	}
+// 	obj.RefCnt--
+// 	if obj.RefCnt == 0 {
+// 		for _, child := range obj.children {
+// 			child.DecRefCnt()
+// 		}
+// 		obj.destroy()
+// 	}
+// }
+
+func DecRefCnt(obj **Object) {
 	if obj == nil {
 		return
 	}
-	obj.RefCnt--
-	if obj.RefCnt == 0 {
-		for _, child := range obj.children {
-			child.DecRefCnt()
+	(*obj).RefCnt--
+	if (*obj).RefCnt == 0 {
+		for _, child := range (*obj).children {
+			DecRefCnt(&child)
 		}
-		obj.destroy()
+		// (*obj).RefCnt++
+		(*obj).destroy()
 	}
-	//obj.RefCnt++
 }
 
+//增加引用，谁被引用谁加计数器
 func (obj *Object) AddRef(ptr *Object) {
 	if ptr == nil {
 		return
@@ -52,15 +76,19 @@ func (obj *Object) AddRef(ptr *Object) {
 
 func (obj *Object) destroy() {
 	obj.children = nil
-	obj.Data = nil
-	fmt.Printf("%s has been destroyed\n", obj.No)
+	// if obj.children == nil {
+	// 	obj.Data = nil
+	// }
+	fmt.Println(obj)
+	// fmt.Printf("%s has been destroyed\n", obj.No)
 }
 
 func main() {
-	root := &Object{No: "root", RefCnt: 0, Data: make([]byte, 2)}
+	root := &Object{No: "root", RefCnt: 1, Data: make([]byte, 2)}
 	a := &Object{No: "A", RefCnt: 0, Data: make([]byte, 2)}
 	b := &Object{No: "B", RefCnt: 0, Data: make([]byte, 2)}
 	c := &Object{No: "C", RefCnt: 0, Data: make([]byte, 2)}
+	// d := &Object{No: "D", RefCnt: 0, Data: make([]byte, 2)}
 	root.AddRef(a)
 	root.AddRef(c)
 	a.AddRef(b)
@@ -69,8 +97,8 @@ func main() {
 	fmt.Println(a)
 	fmt.Println(b)
 	fmt.Println(c)
-
-	a.UpdatePtr(c)
+	// fmt.Println(d)
+	a.UpdatePtr(b, c)
 	fmt.Println("修改阶段")
 	fmt.Println(root)
 	fmt.Printf("%p", a)
@@ -79,6 +107,8 @@ func main() {
 	fmt.Println(b)
 	fmt.Printf("%p", c)
 	fmt.Println(c)
+	// fmt.Printf("%p", d)
+	// fmt.Println(d)
 }
 
 //output:
@@ -100,5 +130,4 @@ A has been destroyed
 0xc0001140f0&{C 2 [0 0] []}
 */
 
-//我的解决思路：在减量操作回溯refCnt,之后统一查看那些没有被引用的对象
-//将它们统一处理掉即可。
+//真正的问题：因为理解错误了书本的update_ptr()函数
