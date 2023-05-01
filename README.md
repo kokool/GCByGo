@@ -18,19 +18,12 @@ https://blog.csdn.net/kokool/article/details/129451004
 忽略堆、链表、数组等数据结构，只考虑对象的处理，实现的简单示例，只剖析最核心的原理，由chatGpt提供。
 https://blog.csdn.net/kokool/article/details/129384458
 
-## GCMarkSweep\optimization
-中村成洋的《垃圾回收的算法与实现》的所有有关于优化方案。
-
 # ReferenceCount（引用计数法）
 ## ReferenceCount\achieve
 只考虑书本的方案去正确实现书本提供的例子，而不考虑优化等问题。
 
 ## ReferenceCount\TEST
 对具体代码进行测试的内容，可能可以运行但是结果不对，也可能不能运行
-
-## ReferenceCount\Optimization
-在`ReferenceCount\Simple`的基础上修改，有关
-中村成洋的《垃圾回收的算法与实现》提及的优化方案。
 
 # 总结
 写的不完美，也不实用，但是较直观，例子选用的是《垃圾回溯的算法与实现》，例子少，难免出现错漏。
