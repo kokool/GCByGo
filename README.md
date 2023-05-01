@@ -31,3 +31,6 @@ https://blog.csdn.net/kokool/article/details/129384458
 ## ReferenceCount\Optimization
 在`ReferenceCount\Simple`的基础上修改，有关
 中村成洋的《垃圾回收的算法与实现》提及的优化方案。
+
+# 总结
+写的不完美，也不实用，但是较直观，例子选用的是《垃圾回溯的算法与实现》，例子少，难免出现错漏。

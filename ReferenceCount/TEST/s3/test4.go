@@ -17,17 +17,16 @@ type Object struct {
 	children []*Object
 }
 
+//问题1：千万不要理解错误书本的update_ptr()
 func (obj *Object) UpdatePtr(oldptr *Object, ptr *Object) {
 	if ptr == nil {
 		return
 	}
-	if oldptr == ptr {
-		return
-	}
+	//先增ptr是为了避免出现同一个对象的问题
 	ptr.IncRefCnt()
-	DecRefCnt(&oldptr)
+	oldptr.DecRefCnt()
+	//问题2：一个节点能够引用多个其他节点，如果可以，这里就需要修改！
 	obj.children = []*Object{ptr}
-	// obj.IncRefCnt()
 }
 
 func (obj *Object) IncRefCnt() {
@@ -37,30 +36,17 @@ func (obj *Object) IncRefCnt() {
 	obj.RefCnt++
 }
 
-// func (obj *Object) DecRefCnt() {
-// 	if obj == nil {
-// 		return
-// 	}
-// 	obj.RefCnt--
-// 	if obj.RefCnt == 0 {
-// 		for _, child := range obj.children {
-// 			child.DecRefCnt()
-// 		}
-// 		obj.destroy()
-// 	}
-// }
-
-func DecRefCnt(obj **Object) {
+func (obj *Object) DecRefCnt() {
 	if obj == nil {
 		return
 	}
-	(*obj).RefCnt--
-	if (*obj).RefCnt == 0 {
-		for _, child := range (*obj).children {
-			DecRefCnt(&child)
+	obj.RefCnt--
+	if obj.RefCnt == 0 {
+		for _, child := range obj.children {
+			child.DecRefCnt()
 		}
-		// (*obj).RefCnt++
-		(*obj).destroy()
+		//暂时替代reclaim
+		obj.destroy()
 	}
 }
 
@@ -76,11 +62,8 @@ func (obj *Object) AddRef(ptr *Object) {
 
 func (obj *Object) destroy() {
 	obj.children = nil
-	// if obj.children == nil {
-	// 	obj.Data = nil
-	// }
-	fmt.Println(obj)
-	// fmt.Printf("%s has been destroyed\n", obj.No)
+	obj.Data = nil
+	fmt.Printf("%s has been destroyed\n", obj.No)
 }
 
 func main() {
@@ -88,18 +71,16 @@ func main() {
 	a := &Object{No: "A", RefCnt: 0, Data: make([]byte, 2)}
 	b := &Object{No: "B", RefCnt: 0, Data: make([]byte, 2)}
 	c := &Object{No: "C", RefCnt: 0, Data: make([]byte, 2)}
-	// d := &Object{No: "D", RefCnt: 0, Data: make([]byte, 2)}
 	root.AddRef(a)
 	root.AddRef(c)
 	a.AddRef(b)
-	fmt.Println("初始阶段")
+	fmt.Println("创建书本图3.2(a)中update_prt()函数执行时的情况")
 	fmt.Println(root)
 	fmt.Println(a)
 	fmt.Println(b)
 	fmt.Println(c)
-	// fmt.Println(d)
 	a.UpdatePtr(b, c)
-	fmt.Println("修改阶段")
+	fmt.Println("最终结果显示正确，执行图3.2(b)的结果")
 	fmt.Println(root)
 	fmt.Printf("%p", a)
 	fmt.Println(a)
@@ -107,27 +88,4 @@ func main() {
 	fmt.Println(b)
 	fmt.Printf("%p", c)
 	fmt.Println(c)
-	// fmt.Printf("%p", d)
-	// fmt.Println(d)
 }
-
-//output:
-/*
-
-初始阶段
-&{root 0 [0 0] [0xc000114050 0xc0001140f0]}
-&{A 1 [0 0] [0xc0001140a0]}
-&{B 1 [0 0] []}
-&{C 1 [0 0] []}
-B has been destroyed
-A has been destroyed
-修改阶段
-&{root 1 [0 0] [0xc000114050 0xc0001140f0]}
-0xc000114050&{A 0 [] [0xc0001140f0]}
-//我真不知道这个存在引用关系的值为什么会递归成这样。
-
-0xc0001140a0&{B 0 [] []}
-0xc0001140f0&{C 2 [0 0] []}
-*/
-
-//真正的问题：因为理解错误了书本的update_ptr()函数
