@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	L "GCByGo/ReferenceCount/TEST/s2/PKG"
+	L "GCByGo/ReferenceCounting/TEST/s2/PKG"
 )
 
 func main() {
